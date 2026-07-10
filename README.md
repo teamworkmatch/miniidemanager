@@ -11,10 +11,6 @@
 
 <sub>**Perhatian!** _Hindari menggunakan skrip ini sebagai file manager standar di ruang publik tanpa konfigurasi proteksi IP/kredensial yang ketat. Sangat disarankan untuk membersihkan atau mengamankan skrip dari server setelah tugas pemeliharaan selesai dilakukan._</sub>
 
-## Demo
-
-[Akses Link Demo Disini](javascript:void(0);) *(Ganti dengan URL demo Anda jika ada)*
-
 ## Kebutuhan Sistem (Requirements)
 
 - **PHP 7.4** atau versi yang lebih tinggi (Sangat optimal pada PHP 8.x).
