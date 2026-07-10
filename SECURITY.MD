@@ -8,8 +8,6 @@ Untuk melaporkan masalah atau celah keamanan (*vulnerability report*), harap **T
 
 📧 **team.workmatch@gmail.com** Dengan menyertakan kata **"SECURITY VULNERABILITY"** pada subjek email.
 
-Tim kami akan mengirimkan respons awal dalam waktu 1x24 jam untuk memverifikasi laporan Anda. Setelah itu, pelapor akan terus mendapatkan informasi berkala mengenai kemajuan proses perbaikan (*fix execution*) hingga pengumuman rilis patch terbaru diterbitkan.
-
 ## Disclosure Policy
 
 Ketika tim pengembang menerima laporan celah keamanan yang valid, proses penanganan akan dikoordinasikan melalui langkah-langkah terstruktur berikut:
