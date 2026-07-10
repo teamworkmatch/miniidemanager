@@ -1,28 +1,30 @@
 # Security Policy
 
-## Reporting a Vulnerability
+## Menemukan Celah Keamanan / Bug?
 
-Repository ini adalah proyek sumber terbuka (*open-source project*) yang dikembangkan dan dirawat bersama oleh komunitas. Kami sangat menghargai upaya siapa pun yang ingin membantu menjaga keamanan skrip ini melalui pelaporan celah keamanan secara bertanggung jawab.
+Karena proyek ini gak punya tim khusus atau admin tunggal, keamanan skrip ini dijaga **bareng-bareng oleh komunitas (termasuk kamu!)**. Kalau kamu nemu celah keamanan (*vulnerability*) atau bug yang sekiranya berbahaya, mari kita beresin dengan cara yang cerdas.
 
-Jika kamu menemukan kerentanan (*vulnerability*), harap **JANGAN** membuka laporan celah tersebut langsung di menu publik (seperti GitHub Issues). Sebagai gantinya, gunakan jalur privat berikut agar para kontributor dan maintainer aktif dapat memperbaikinya bersama:
+Harap **JANGAN** langsung koar-koar atau bikin laporan di GitHub Issues publik. Kenapa? Biar celah tersebut gak dimanfaatin sama hacker nakal buat nge-raid server orang lain yang lagi pakai skrip ini sebelum sempat kita tambal. 
 
-1. **GitHub Security Advisories:** Masuk ke tab **Security** di repositori ini, lalu pilih **Report a vulnerability** untuk mengirimkan laporan privat langsung ke para pengelola repositori.
-2. **Email Kontributor/Maintainer:** Kamu juga bisa langsung menghubungi maintainer aktif proyek ini melalui email yang tertera pada profil pengembang masing-masing di GitHub.
+Sebagai gantinya, gunakan jalur privat ini biar bisa diobrolin bareng kontributor lain:
 
-Para maintainer yang sedang aktif akan merespons laporan kamu secepatnya untuk memverifikasi temuan dan mendiskusikan langkah perbaikan selanjutnya.
+1. **GitHub Security Advisories (Sangat Direkomendasikan):** Masuk ke tab **Security** di repositori ini, terus klik **Report a vulnerability**. Jalur ini privat dan cuma bisa dilihat sama orang-orang yang ikut ngerawat repositori ini.
+2. **Kontak Langsung Kontributor:** Colek atau email siapa aja kontributor/maintainer yang lagi aktif di proyek ini (bisa dicek lewat profil GitHub mereka masing-masing).
 
----
-
-## Disclosure Policy
-
-Ketika sebuah laporan celah keamanan diterima oleh pengelola repositori, siapa saja kontributor yang aktif saat itu akan berkoordinasi secara terbuka untuk memproses perbaikan melalui langkah berikut:
-
-* **Verifikasi:** Memeriksa keabsahan celah, menentukan tingkat keparahan (*impact*), serta mengidentifikasi versi mana saja yang terdampak.
-* **Audit Bersama:** Menelusuri basis kode repositori untuk memastikan tidak ada celah serupa di bagian fungsionalitas lain.
-* **Push Patch:** Menyiapkan kode perbaikan (*hotfix*) terbaik dan merilis versi pembaruan secepat mungkin ke *main branch* agar bisa langsung digunakan oleh publik.
+Siapa pun yang lagi senggang dan *online* bakal langsung ngerespons laporan kamu buat bareng-bareng nyari solusinya.
 
 ---
 
-## Kontribusi pada Kebijakan Ini
+## Alur Penanganan (Gak Pake Ribet)
 
-Kebijakan ini dibuat dari komunitas untuk komunitas. Jika kamu memiliki ide atau saran untuk meningkatkan alur penanganan keamanan di repositori ini agar lebih efisien, jangan ragu untuk langsung mengirimkan **Pull Request (PR)**!
+Begitu ada laporan celah keamanan yang masuk secara privat, siapa aja kontributor/developer yang lagi aktif saat itu bakal langsung *action* tanpa perlu nunggu komando:
+
+* **Cek Bareng:** Memastikan celahnya beneran valid dan cari tahu bagian kode mana aja yang kena efeknya.
+* **Gass Tambal:** Langsung coding buat nyari solusi terbaik buat nutup celah tersebut.
+* **Langsung Push:** Begitu dapet solusinya, kode perbaikan (*patch*) bakal langsung di-merge ke *main branch* hari itu juga biar publik bisa langsung update dengan aman.
+
+---
+
+## Mau Ikut Bikin Kebijakan Ini Lebih Oke?
+
+Kebijakan ini dibuat dari kita, oleh kita, dan untuk kita semua. Kalau kamu punya ide gimana cara alur pelaporan atau pengamanan proyek bebas aturan ini biar makin solid tanpa ngilangin sifat asyiknya, langsung kirim **Pull Request (PR)** atau buka diskusi sekarang juga!
