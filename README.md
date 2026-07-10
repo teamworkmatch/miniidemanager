@@ -5,51 +5,63 @@
 [![Styling UI](https://img.shields.io/badge/UI-Tailwind_CSS-38bdf8.svg?style=flat-square)](https://tailwindcss.com/)
 [![GitHub License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 
-> Mini File Manager IDE adalah ekosistem manajemen file dan web-based development environment (IDE) berbasis PHP native yang ringkas, berkinerja tinggi, dan berjalan dalam satu file tunggal (*single-file architecture*). 
->
-> Dirancang menggunakan **Monaco Editor** dan **Tailwind CSS**, aplikasi ini menawarkan pengalaman coding kelas *cloud-IDE* yang responsif tanpa membutuhkan dependensi berat (zero-bloat). Dilengkapi dengan manajemen multi-user berbasis *Flat-File Secure Storage*, perlindungan SSRF/CSRF tingkat lanjut, serta sistem perluasan fungsi berbasis **IDE Hook Plugin Engine**.
+> **Proyek Publik Bebas Aturan!** 🚀
+> Mini File Manager IDE adalah ekosistem manajemen file dan web-based IDE berbasis PHP native yang berjalan dalam satu file tunggal (*single-file architecture*). 
+> 
+> Proyek ini sepenuhnya milik publik. **Siapa aja boleh ambil, edit, rombak total, atau hancurin kodenya sebebas mungkin!** Nggak ada aturan birokrasi kaku, gak ada gatekeeping. Kalau kamu punya ide atau perbaikan, langsung tumpahin aja kodenya ke sini!
 
-<sub>**Perhatian!** _Hindari menggunakan skrip ini sebagai file manager standar di ruang publik tanpa konfigurasi proteksi IP/kredensial yang ketat. Sangat disarankan untuk membersihkan atau mengamankan skrip dari server setelah tugas pemeliharaan selesai dilakukan._</sub>
+<sub>**Perhatian Bersama!** _Karena skrip ini sangat powerful, pastikan untuk selalu mengonfigurasi proteksi kredensial atau IP saat melakukan pengujian di server hidup. Jangan biarkan skrip terbuka tanpa pengamanan di server publik._</sub>
 
-## Kebutuhan Sistem (Requirements)
+---
+
+## 🤠 Bebas Ngapain Aja (Anarchy-Friendly)
+
+Kami percaya kode terbaik itu lahir dari kebebasan penuh. Repositori ini gak punya aturan saklek buat kontribusi:
+
+* **Mau Tambah Fitur?** Langsung coding, gak usah ribet mikirin nama branch yang bener.
+* **Nemu Bug / Celah Security?** Langsung tambal kodenya, atau buka diskusi biar yang lain tahu.
+* **Mau Bikin Tampilan Baru?** Silakan acak-acak Tailwind CSS-nya sampai berubah total sesuai selera kamu.
+* **Mau Copas buat Proyek Sendiri?** Ambil aja, fork sepuasnya, rename sesuka hati, bebas!
+
+*Yang penting kodenya jalan, bermanfaat, dan bikin hidup developer lain jadi lebih gampang.*
+
+---
+
+## 💡 Kebutuhan Sistem (Requirements)
 
 - **PHP 7.4** atau versi yang lebih tinggi (Sangat optimal pada PHP 8.x).
-- Ekstensi PHP berikut sangat direkomendasikan untuk fungsionalitas penuh:
-  - `cURL` (Dibutuhkan untuk fitur download file via URL/Remote Download).
-  - `ZipArchive` (Dibutuhkan untuk fitur kompresi batch ZIP & download terpadu).
-  - `Fileinfo` & `mbstring` (Dibutuhkan untuk deteksi MIME-type media secara akurat).
+- Ekstensi PHP berikut sangat direkomendasikan untuk membuka fungsionalitas penuh:
+  - `cURL` (Untuk fitur Remote Download/URL Import).
+  - `ZipArchive` (Untuk fitur kompresi batch ZIP).
+  - `Fileinfo` & `mbstring` (Untuk deteksi tipe file/media).
 
-## Cara Penggunaan (How to Use)
+---
 
-1. Unduh atau salin kode skrip `miniidemanager.php` ke dalam direktori *webspace* / *hosting* server Anda.
-2. Anda dibebaskan untuk mengubah nama file dari `miniidemanager.php` menjadi nama unik lain (misal: `secret_ide.php`) untuk meningkatkan keamanan obfuscation.
-3. Kredensial masuk sistem bawaan (*Default Credentials*):
+## 🚀 Cara Penggunaan & Modifikasi
+
+1. **Fork & Ambil Kodenya:** Klik tombol **Fork** di pojok kanan atas repositori ini buat punya salinan di akun kamu, atau langsung download file `miniidemanager.php`.
+2. **Jalankan di Server:** Copas file `miniidemanager.php` ke dalam direktori server web kamu.
+3. **Ganti Nama Sesukamu:** Kamu bebas mengubah nama file `miniidemanager.php` jadi apa aja (misal: `alat_rahasia.php`) biar gak gampang ditebak orang lain.
+4. **Kredensial Bawaan (*Default*):**
    - **Username:** `admin`
    - **Password:** `admin123`
 
-⚠️ **Peringatan Penting:** *Segera ganti password bawaan Anda langsung melalui menu **Settings** di dalam aplikasi setelah pertama kali berhasil masuk sistem. Password dienkripsi menggunakan standar industri keamanan `password_hash()`.*
-
-💡 **Info Tambahan:** - Untuk mengaktifkan mode pemirsa publik, Anda dapat mengaktifkan **Guest Mode Access** di panel pengaturan, sehingga aplikasi dapat diakses publik secara aman via parameter query `?embed=1` dalam koridor akses *Read-Only*.
+⚠️ **Tips:** *Jangan lupa langsung ganti password bawaan lewat menu **Settings** setelah berhasil login untuk pertama kali.*
 
 ---
 
-### 📢 Fitur Utama (Features)
+## 📢 Fitur Utama (Features)
 
-- 💾 **Single-File Architecture:** Berjalan penuh hanya dengan satu file skrip utama. Minimalis, portabel, dan sangat mudah dipasang.
-- 📱 **Responsive UI / Mobile Friendly:** Tampilan antarmuka yang modern dan responsif menggunakan Tailwind CSS, dioptimalkan untuk perangkat layar sentuh dan desktop.
-- ⚙️ **Monaco Code Editor Engine:** Dilengkapi editor teks VS Code-like terintegrasi yang mendukung pencarian canggih (*Find & Replace* via `Ctrl+F` / `Ctrl+H`), pemetaan bahasa, dan indikator penyimpanan dinamis (*unsaved pulse detection*).
-- 🧩 **IDE Hook Plugin Engine:** Memiliki arsitektur manajemen ekstensi sendiri via folder `/plugins`. Developer dapat menyisipkan file `backend.php`, `frontend.js`, dan `style.css` custom yang otomatis terpetakan ke sistem inti melalui fungsi `window.IDEHooks`.
-- 📁 **Batch Operations:** Mengizinkan pemilihan banyak item (*Multi-Select Mode*) sekaligus untuk melakukan operasi massal seperti salin (*Copy*), pindah (*Move*), atau kompresi ZIP terenkapsulasi secara aman.
-- 🖥️ **Media Preview Documents:** Dilengkapi pemutar media bawaan untuk menampilkan gambar, video, dan berkas audio, serta *isolated contextual iframe embedding* untuk dokumen PDF atau sejenisnya.
-- 🛡️ **Advanced Security Shield:** - **Flat-File JSON Protection:** Berkas database sensitif (`.app_users.php`, `.app_config.php`) diproteksi dari akses langsung peretas via web menggunakan penutup skrip die-executable (`<?php exit("Access Denied"); ?>`).
-  - **SSRF Protection:** Mengaudit resolusi DNS target pada unduhan jarak jauh untuk mencegah eksploitasi jaringan privat/internal server serta memblokir port berbahaya (seperti 22, 3306, 6379).
-  - **CSRF Verification & Rate Limiting:** Validasi ketat token mutasi state via HTTP Header (`X-CSRF-Token`) dan sistem penguncian login otomatis (Brute-Force Lockout) berbasis IP per 5 percobaan gagal.
-- 🎨 **Real-time Theme Synchronization:** Pilihan tema antarmuka dinamis (*Dark, Light, Ocean*) yang tersinkronisasi secara instan di seluruh tab browser maupun *local storage* secara *real-time*.
+- 💾 **Single-File Power:** Seluruh sistem backend dan tampilan frontend dikemas dalam satu file skrip tunggal. Super portabel, tinggal drop dan jalankan di mana aja.
+- 📱 **Modern & Responsive:** Antarmuka bersih menggunakan Tailwind CSS yang nyaman diakses baik dari smartphone, tablet, maupun desktop.
+- ⚙️ **Monaco Code Editor Engine:** Pengalaman coding standar industri (seperti VS Code) lengkap dengan fitur pencarian canggih (*Find & Replace* via `Ctrl+F` / `Ctrl+H`), multi-tab manajemen, dan deteksi otomatis status penyimpanan berkas.
+- 🧩 **Modular Plugin System:** Mendukung perluasan fungsi tanpa merusak kode inti via folder `/plugins`. Cukup manfaatkan engine hook `window.IDEHooks` lewat file `frontend.js` atau `backend.php` bikinanmu sendiri.
+- 📁 **Massal Operations:** Mode multi-select untuk melakukan aksi massal seperti *Copy*, *Move*, atau *ZIP Compression* dalam sekali klik.
+- 🖥️ **Media & Document Preview:** Pemutar langsung untuk file berbasis gambar, audio, video, hingga dokumen PDF secara instan di dalam editor.
+- 🛡️ **Built-in Security Shield:** Proteksi flat-file database dari akses asing, pencegahan SSRF pada *remote download*, serta sistem verifikasi token CSRF untuk mengamankan mutasi data.
 
 ---
 
-## Lisensi & Kredit
+## 📄 Lisensi
 
-- Tersedia di bawah lisensi **MIT License**.
-- Pengembangan UI & Sistem Inti menggunakan pustaka pihak ketiga via CDN: *Tailwind CSS, Monaco Editor, Tabler Icons.*
-- Untuk melaporkan masalah (*Bug*) atau meminta fitur baru, silakan ajukan melalui menu [Issues](javascript:void(0);) di repositori ini.
+Proyek ini menggunakan lisensi **MIT License**. Kamu bebas pakai, ubah, sebarin ulang, bahkan dijual lagi buat proyek komersial pun silakan, gak ada yang bakal nuntut!
