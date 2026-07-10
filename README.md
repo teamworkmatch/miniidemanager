@@ -21,8 +21,8 @@
 
 ## Cara Penggunaan (How to Use)
 
-1. Unduh atau salin kode skrip `index.php` ke dalam direktori *webspace* / *hosting* server Anda.
-2. Anda dibebaskan untuk mengubah nama file dari `index.php` menjadi nama unik lain (misal: `secret_ide.php`) untuk meningkatkan keamanan obfuscation.
+1. Unduh atau salin kode skrip `miniidemanager.php` ke dalam direktori *webspace* / *hosting* server Anda.
+2. Anda dibebaskan untuk mengubah nama file dari `miniidemanager.php` menjadi nama unik lain (misal: `secret_ide.php`) untuk meningkatkan keamanan obfuscation.
 3. Kredensial masuk sistem bawaan (*Default Credentials*):
    - **Username:** `admin`
    - **Password:** `admin123`
