@@ -110,7 +110,3 @@ Biar plugin kamu warnanya otomatis ikutan berubah pas user ganti tema (Gelap, Te
 * `var(--accent)` — Warna tombol aktif/aksen tema (biru/biru laut).
 
 Selamat berkreasi dan mencoba bikin aksesoris versimu sendiri! Gak usah takut salah, namanya juga belajar bareng komunitas! 🤠🔥
-
-```
-
-```
