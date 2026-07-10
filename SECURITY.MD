@@ -6,7 +6,7 @@ Tim pengembang Mini File Manager IDE berkomitmen penuh untuk menangani celah kea
 
 Untuk melaporkan masalah atau celah keamanan (*vulnerability report*), harap **TIDAK** membuka laporan celah secara publik melalui GitHub Issues. Kirimkan detail temuan Anda melalui email ke:
 
-📧 **your-security-email[at]domain[dot]com** *(Sesuaikan dengan email Anda)* Dengan menyertakan kata **"SECURITY VULNERABILITY"** pada subjek email.
+📧 **team.workmatch@gmail.com** Dengan menyertakan kata **"SECURITY VULNERABILITY"** pada subjek email.
 
 Tim kami akan mengirimkan respons awal dalam waktu 1x24 jam untuk memverifikasi laporan Anda. Setelah itu, pelapor akan terus mendapatkan informasi berkala mengenai kemajuan proses perbaikan (*fix execution*) hingga pengumuman rilis patch terbaru diterbitkan.
 
