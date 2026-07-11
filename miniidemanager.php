@@ -353,7 +353,6 @@ if (($is_logged_in || $is_guest) && !$guest_denied && isset($_GET['ajax'])) {
     $fullPath = $target_dir . ($relPath ? DIRECTORY_SEPARATOR . $relPath : '');
     $realPath = realpath($fullPath) ?: $fullPath;
 
-    // FUNGSI KEAMANAN PATH DIPERBARUI
     function isSafePath($path, $base, $allowed_paths) {
         $real = realpath($path);
         if ($real === false && !file_exists($path)) $real = realpath(dirname($path));
@@ -456,6 +455,13 @@ if (($is_logged_in || $is_guest) && !$guest_denied && isset($_GET['ajax'])) {
 
     if ($action === 'info') {
         header('Content-Type: application/json');
+        // --- PROTEKSI GUEST: Blokir akses metadata untuk Guest Mode demi keamanan jeroan server ---
+        if ($is_guest || ($current_user['role'] ?? '') === 'guest') {
+            echo json_encode(['error' => 'Demi keamanan server, detail metadata & struktur path dinonaktifkan pada akses publik (Guest Mode).']); 
+            exit;
+        }
+        // -------------------------------------------------------------------------------------------
+
         if (!isSafePath($fullPath, $target_dir, $user_allowed_paths) || !file_exists($fullPath)) {
             echo json_encode(['error' => 'Item tidak ditemukan atau akses ditolak']); exit;
         }
@@ -1721,6 +1727,12 @@ if (($is_logged_in || $is_guest) && !$guest_denied && isset($_GET['ajax'])) {
         }
 
         function showMetadataModal(path, type) {
+            // --- PROTEKSI GUEST: Blokir modal metadata untuk Guest Mode ---
+            if (isGuestMode) {
+                return alert('Akses Ditolak: Detail metadata server dinonaktifkan pada akses publik (Guest Mode) demi keamanan jaringan!');
+            }
+            // --------------------------------------------------------------
+
             const overlay = document.getElementById('modal-overlay'); const title = document.getElementById('modal-title'); const body = document.getElementById('modal-body'); const footer = document.getElementById('modal-footer');
             title.innerText = `Detail Metadata ${type === 'folder' ? 'Folder' : 'File'}`;
             body.innerHTML = `<div class="py-8 text-center text-xs opacity-70"><i class="ti ti-loader-2 animate-spin text-2xl mb-2 inline-block"></i><br>Mengambil data metadata dari server...</div>`;
@@ -1856,7 +1868,13 @@ if (($is_logged_in || $is_guest) && !$guest_denied && isset($_GET['ajax'])) {
                 if (type === 'folder') {
                     menuHTML += createItem('ti ti-folder-open text-yellow-400 font-bold', 'Buka Full di Sidebar', `drillDownFolder('${path}');`);
                     if (USER_MODE !== 'read-only') { menuHTML += createItem('ti ti-copy text-blue-400 font-bold', 'Copy / Move ke Folder Lain', `openModal('copy_move_single', '${path}', 'folder');`); }
-                    menuHTML += createItem('ti ti-info-circle text-purple-400 font-bold', 'Detail & Metadata Folder', `showMetadataModal('${path}', 'folder');`);
+                    
+                    // --- PROTEKSI GUEST: Sembunyikan menu Detail dari Guest ---
+                    if (!isGuestMode) {
+                        menuHTML += createItem('ti ti-info-circle text-purple-400 font-bold', 'Detail & Metadata Folder', `showMetadataModal('${path}', 'folder');`);
+                    }
+                    // ----------------------------------------------------------
+                    
                     menuHTML += createDivider();
                 }
                 if (USER_MODE !== 'read-only') {
@@ -1874,7 +1892,13 @@ if (($is_logged_in || $is_guest) && !$guest_denied && isset($_GET['ajax'])) {
                         menuHTML += createItem('ti ti-copy text-amber-400 font-bold', 'Buat Backup (.bak)', `backupItem('${path}')`);
                         menuHTML += createItem('ti ti-copy text-blue-400 font-bold', 'Copy / Move ke Folder Lain', `openModal('copy_move_single', '${path}', 'file');`);
                     }
-                    menuHTML += createItem('ti ti-info-circle text-purple-400 font-bold', 'Detail & Metadata File', `showMetadataModal('${path}', 'file');`);
+                    
+                    // --- PROTEKSI GUEST: Sembunyikan menu Detail dari Guest ---
+                    if (!isGuestMode) {
+                        menuHTML += createItem('ti ti-info-circle text-purple-400 font-bold', 'Detail & Metadata File', `showMetadataModal('${path}', 'file');`);
+                    }
+                    // ----------------------------------------------------------
+                    
                     menuHTML += createItem('ti ti-download', 'Download File', `window.open(getApiUrl('download', 'path=' + encodeURIComponent('${path}')), '_blank')`);
                     if (USER_MODE !== 'read-only') menuHTML += createDivider();
                 }
@@ -2178,14 +2202,35 @@ if (($is_logged_in || $is_guest) && !$guest_denied && isset($_GET['ajax'])) {
                 const url = getApiUrl('raw', 'path=' + encodeURIComponent(filePath));
                 previewContent.className = "absolute inset-0 w-full h-full flex items-center justify-center p-4 overflow-auto";
 
+                // --- LOGIKA TAMPILAN MEDIA & ANTI AUTO-DOWNLOAD ---
                 if (tabData.info.type === 'image') {
                     previewContent.innerHTML = `<img src="${url}" class="max-w-full max-h-full object-contain rounded shadow-2xl bg-black/10 border border-theme animate-scale-up">`;
                 } else if (tabData.info.type === 'video') {
                     previewContent.innerHTML = `<video src="${url}" controls class="max-w-full max-h-full rounded shadow-2xl border border-theme animate-scale-up"></video>`;
                 } else if (tabData.info.type === 'audio') {
-                    previewContent.innerHTML = `<div class="p-10 rounded-2xl shadow-2xl border border-theme text-center animate-scale-up"><i class="ti ti-music text-[5rem] text-[var(--accent)] mb-6 block animate-bounce"></i><audio src="${url}" controls class="w-[300px]"></audio><div class="mt-4 text-xs font-mono font-bold text-gray-400 break-all">${filePath.split('/').pop()}</div></div>`;
-                } else {
+                    previewContent.innerHTML = `<div class="p-10 rounded-2xl shadow-2xl border border-theme text-center animate-scale-up bg-[var(--bg-sidebar)]"><i class="ti ti-music text-[5rem] text-[var(--accent)] mb-6 block animate-bounce"></i><audio src="${url}" controls class="w-[300px]"></audio><div class="mt-4 text-xs font-mono font-bold text-gray-400 break-all">${filePath.split('/').pop()}</div></div>`;
+                } else if (tabData.info.type === 'pdf') {
                     previewContent.innerHTML = `<iframe src="${url}" class="w-full h-full bg-white rounded-lg border border-theme shadow-2xl"></iframe>`;
+                } else {
+                    // KARTU KHUSUS UNTUK ZIP, RAR, EXE, DOCX, DLL (Agar TIDAK auto-download)
+                    const fileName = filePath.split('/').pop();
+                    const dlUrl = getApiUrl('download', 'path=' + encodeURIComponent(filePath));
+                    previewContent.innerHTML = `
+                        <div class="p-8 md:p-12 rounded-2xl shadow-2xl border border-theme text-center animate-scale-up bg-[var(--bg-sidebar)] max-w-md w-full mx-4">
+                            <div class="w-24 h-24 rounded-full bg-black/20 flex items-center justify-center mx-auto mb-6 border border-theme shadow-inner">
+                                <span class="text-5xl ${tabData.info.color}">${tabData.info.icon}</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-[var(--text-main)] truncate mb-1" title="${fileName}">${fileName}</h3>
+                            <p class="text-xs text-gray-400 font-mono mb-6">${tabData.info.label || 'Archive / Binary File'}</p>
+                            <div class="bg-black/10 p-3.5 rounded-lg border border-theme mb-6 text-xs text-gray-400 leading-relaxed text-left flex items-start gap-2.5">
+                                <i class="ti ti-info-circle text-[var(--accent)] text-lg flex-shrink-0 mt-0.5"></i> 
+                                <span>File ini tidak dapat ditampilkan secara preview di dalam browser. Klik tombol di bawah jika Anda ingin mengunduh atau menyimpannya.</span>
+                            </div>
+                            <a href="${dlUrl}" target="_blank" class="w-full py-3 bg-[var(--accent)] hover:opacity-90 text-white font-bold rounded-xl shadow-lg flex items-center justify-center gap-2 transition active:scale-95 inline-flex">
+                                <i class="ti ti-download text-lg"></i> Download File Sekarang
+                            </a>
+                        </div>
+                    `;
                 }
                 document.getElementById('status').innerHTML = `<i class="ti ti-eye"></i> Viewing Media: ${filePath.split('/').pop()}`;
             } else {
@@ -2201,7 +2246,7 @@ if (($is_logged_in || $is_guest) && !$guest_denied && isset($_GET['ajax'])) {
                 document.getElementById('status').innerHTML = `<i class="ti ti-edit"></i> Editing: ${filePath}`;
             }
 
-            // [PLUGIN HOOK INJECTION]: Mengizinkan plugin untuk bereaksi saat tab berubah (misal nambah tombol toolbar khusus)
+            // [PLUGIN HOOK INJECTION]: Mengizinkan plugin untuk bereaksi saat tab berubah
             window.IDEHooks.do('after_switchTab', activeTab, tabData);
 
             renderTabs(); saveSession(); 
